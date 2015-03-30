@@ -1,0 +1,19 @@
+Source: vcflib-tgi1
+Section: science
+Priority: optional
+Maintainer: Genome Developers <genome-dev@genome.wustl.edu>
+Uploaders: Indraniel Das <idas@genome.wustl.edu>
+Build-Depends: debhelper (>= 7.0.50~)
+Standards-Version: 3.9.2
+Homepage: https://github.com/ekg/vcflib
+
+Package: vcflib-tgi1
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}, ${perl:Depends}, r-base, python2.7, perl
+Description: tools and C++ library for parsing and manipulating VCF files
+ vcflib is a suite of programs (C++, bash, perl, & python) for parsing
+ and manipulating Variant Call Format (VCF) files used in genomic studies.
+ .
+ This package is a custom Genome Institute at Washington University in
+ St. Louis (TGI) edition of https://github.com/ekg/vcflib.  It is based on 
+ git commit "b1e9b31d2d95f957f86cdfd1e7c9ec25b4950ee8" of that repository.

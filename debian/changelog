@@ -1,0 +1,7 @@
+vcflib-tgi1 (2015.03.13-1) lucid; urgency=low
+
+  * Initial release.  Based on: 
+    commit b1e9b31d2d95f957f86cdfd1e7c9ec25b4950ee8
+    Fri, 13 Mar 2015 19:13:15 +0000
+
+ -- Indraniel Das <idas@genome.wustl.edu>  Mon, 30 Mar 2015 13:18:13 -0500
