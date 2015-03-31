@@ -1,4 +1,4 @@
-Source: vcflib-tgi1
+Source: vcflib-tgi1.0
 Section: science
 Priority: optional
 Maintainer: Genome Developers <genome-dev@genome.wustl.edu>
@@ -7,7 +7,7 @@ Build-Depends: debhelper (>= 7.0.50~)
 Standards-Version: 3.9.2
 Homepage: https://github.com/ekg/vcflib
 
-Package: vcflib-tgi1
+Package: vcflib-tgi1.0
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}, ${perl:Depends}, r-base, python2.7, perl
 Description: tools and C++ library for parsing and manipulating VCF files

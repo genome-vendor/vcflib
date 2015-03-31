@@ -1,4 +1,4 @@
-vcflib-tgi1 (2015.03.13-1) lucid; urgency=low
+vcflib-tgi1.0 (2015.03.13-1) lucid; urgency=low
 
   * Initial release.  Based on: 
     commit b1e9b31d2d95f957f86cdfd1e7c9ec25b4950ee8
