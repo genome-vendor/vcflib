@@ -6,6 +6,8 @@ SOURCES = src/Variant.cpp \
 		  src/split.cpp
 OBJECTS= $(SOURCES:.cpp=.o)
 
+VERSION = 1.0
+
 # TODO
 #vcfstats.cpp
 
@@ -77,8 +79,10 @@ BIN_SOURCES = src/vcfecho.cpp \
 # src/vcfsom.cpp
 
 #BINS = $(BIN_SOURCES:.cpp=)
-BINS = $(addprefix bin/,$(notdir $(BIN_SOURCES:.cpp=)))
 SHORTBINS = $(notdir $(BIN_SOURCES:.cpp=))
+BINS = $(addprefix bin/,$(SHORTBINS))
+PRG_NAMES = $(addsuffix $(VERSION), $(SHORTBINS))
+FINAL_BINS = $(addprefix bin/,$(PRG_NAMES))
 
 TABIX = tabixpp/tabix.o
 FASTAHACK = fastahack/Fasta.o
@@ -94,7 +98,7 @@ INCLUDES = -I. -Itabixpp/htslib/ -L. -Ltabixpp/ -Ltabixpp/htslib/
 LDFLAGS = -lvcflib -ltabix -lhts -lpthread -lz -lm
 
 
-all: $(OBJECTS) $(BINS)
+all: $(OBJECTS) $(FINAL_BINS)
 
 CXX = g++
 CXXFLAGS = -O3 -D_FILE_OFFSET_BITS=64
@@ -141,8 +145,13 @@ $(FASTAHACK):
 $(FILEVERCMP):
 	cd filevercmp && make
 
+$(FINAL_BINS): $(BINS)
+
 $(SHORTBINS):
 	$(MAKE) bin/$@
+
+%$(VERSION): %
+	mv $< $@
 
 $(BINS): $(BIN_SOURCES) libvcflib.a $(OBJECTS) $(SMITHWATERMAN) $(FASTAHACK) $(DISORDER) $(LEFTALIGN) $(INDELALLELE) $(SSW) $(FILEVERCMP)
 	$(CXX) src/$(notdir $@).cpp -o $@ $(INCLUDES) $(LDFLAGS) $(CXXFLAGS)
@@ -155,7 +164,7 @@ test: $(BINS)
 	@prove -Itests/lib -w tests/*.t
 
 clean:
-	rm -f $(BINS) $(OBJECTS)
+	rm -f $(FINAL_BINS) $(OBJECTS)
 	rm -f ssw_cpp.o ssw.o
 	rm -f libvcflib.a
 	cd tabixpp && make clean
