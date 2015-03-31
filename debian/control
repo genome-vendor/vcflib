@@ -10,7 +10,7 @@ Homepage: https://github.com/ekg/vcflib
 Package: vcflib-tgi1.0
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, python2.7, perl, libsqlite3-0, r-base, r-cran-ggplot2, r-cran-plyr
-Description: tools and C++ library for parsing and manipulating VCF files
+Description: tools for parsing and manipulating VCF files
  vcflib is a suite of programs (C++, bash, perl, & python) for parsing
  and manipulating Variant Call Format (VCF) files used in genomic studies.
  .
