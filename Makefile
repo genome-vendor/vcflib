@@ -84,6 +84,9 @@ BINS = $(addprefix bin/,$(SHORTBINS))
 PRG_NAMES = $(addsuffix $(VERSION), $(SHORTBINS))
 FINAL_BINS = $(addprefix bin/,$(PRG_NAMES))
 
+VCFLIB := libvcflib$(VERSION).a
+VCFLIB_FLAG := -lvcflib1.0
+
 TABIX = tabixpp/tabix.o
 FASTAHACK = fastahack/Fasta.o
 SMITHWATERMAN = smithwaterman/SmithWatermanGotoh.o 
@@ -95,7 +98,7 @@ FSOM = fsom/fsom.o
 FILEVERCMP = filevercmp/filevercmp.o
 
 INCLUDES = -I. -Itabixpp/htslib/ -L. -Ltabixpp/ -Ltabixpp/htslib/
-LDFLAGS = -lvcflib -ltabix -lhts -lpthread -lz -lm
+LDFLAGS = $(VCFLIB_FLAG) -ltabix -lhts -lpthread -lz -lm
 
 
 all: $(OBJECTS) $(FINAL_BINS)
@@ -153,11 +156,11 @@ $(SHORTBINS):
 %$(VERSION): %
 	mv $< $@
 
-$(BINS): $(BIN_SOURCES) libvcflib.a $(OBJECTS) $(SMITHWATERMAN) $(FASTAHACK) $(DISORDER) $(LEFTALIGN) $(INDELALLELE) $(SSW) $(FILEVERCMP)
+$(BINS): $(BIN_SOURCES) $(VCFLIB) $(OBJECTS) $(SMITHWATERMAN) $(FASTAHACK) $(DISORDER) $(LEFTALIGN) $(INDELALLELE) $(SSW) $(FILEVERCMP)
 	$(CXX) src/$(notdir $@).cpp -o $@ $(INCLUDES) $(LDFLAGS) $(CXXFLAGS)
 
-libvcflib.a: $(OBJECTS) $(SMITHWATERMAN) $(REPEATS) $(FASTAHACK) $(DISORDER) $(LEFTALIGN) $(INDELALLELE) $(SSW) $(FILEVERCMP) $(TABIX)
-	ar rs libvcflib.a $(OBJECTS) smithwaterman/sw.o $(FASTAHACK) $(SSW) $(FILEVERCMP) $(TABIX)
+$(VCFLIB): $(OBJECTS) $(SMITHWATERMAN) $(REPEATS) $(FASTAHACK) $(DISORDER) $(LEFTALIGN) $(INDELALLELE) $(SSW) $(FILEVERCMP) $(TABIX)
+	ar rs $@ $(OBJECTS) smithwaterman/sw.o $(FASTAHACK) $(SSW) $(FILEVERCMP) $(TABIX)
 
 
 test: $(BINS)
@@ -166,7 +169,7 @@ test: $(BINS)
 clean:
 	rm -f $(FINAL_BINS) $(OBJECTS)
 	rm -f ssw_cpp.o ssw.o
-	rm -f libvcflib.a
+	rm -f $(VCFLIB)
 	cd tabixpp && make clean
 	cd smithwaterman && make clean
 	cd fastahack && make clean
